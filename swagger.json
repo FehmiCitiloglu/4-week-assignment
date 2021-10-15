@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "description": "This is a sample server Twitter server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
     "version": "1.0.0",
     "title": "Swagger Petstore",
     "termsOfService": "http://swagger.io/terms/",
@@ -17,7 +17,7 @@
     "/users": {
       "get": {
         "summary": "Retrieve a list of JSONPlaceholder users.",
-        "description": "Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.",
+        "description": "Retrieve a list of users from JSONPlaceholder.",
         "responses": {
           "200": {
             "description": "A list of users.",
@@ -36,7 +36,96 @@
                             "description": "The user ID.",
                             "example": 0
                           },
-                          "name": {
+                          "username": {
+                            "type": "string",
+                            "description": "The user's username.",
+                            "example": "Leanne Graham"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Retrieve a single JSONPlaceholder user.",
+        "description": "Retrieve a single JSONPlaceholder user. Can be used to populate a user profile when prototyping or testing an API.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the user to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "The user ID.",
+                          "example": 0
+                        },
+                        "username": {
+                          "type": "string",
+                          "description": "The user's name.",
+                          "example": "Leanne Graham"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets": {
+      "get": {
+        "summary": "Retrieve a list of JSONPlaceholder users.",
+        "description": "Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.",
+        "responses": {
+          "200": {
+            "description": "A list of tweets.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "The user ID.",
+                            "example": 0
+                          },
+                          "user_id": {
+                            "type": "integer",
+                            "description": "The user ID.",
+                            "example": 0
+                          },
+                          "tweet_content": {
                             "type": "string",
                             "description": "The user's name.",
                             "example": "Leanne Graham"
@@ -52,7 +141,7 @@
         }
       }
     },
-    "/users/{id}": {
+    "/tweets/{id}": {
       "get": {
         "summary": "Retrieve a single JSONPlaceholder user.",
         "description": "Retrieve a single JSONPlaceholder user. Can be used to populate a user profile when prototyping or testing an API.",

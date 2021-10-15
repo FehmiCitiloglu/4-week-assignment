@@ -1,47 +1,35 @@
-// // import express from "express";
-// // const dotenv = require("dotenv").config();
-// import pgPromise from "pg-promise";
-// // const router = express.Router();
-// // const app = express();
-// const pgp = pgPromise({});
+const usersExpress = require("express");
+const usersDb = require("../db/db");
 
-// var db = pgp({
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   host: process.env.DB_HOST,
-//   port: 5432,
-//   database: process.env.DB_DATABASE,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
-const express = require("express");
-const myDb = require("../db/db");
+const usersRouter = usersExpress.Router();
 
-const router = express.Router();
-
-router
-  .route("/users")
+usersRouter
+  .route("/")
   .all((req: any, res: any, next: any) => {
     console.log("Request detected");
     next();
-
-    //res.send("It works. Try different route");
   })
-  .get((req: any, res: any) => {
-    myDb
-      .query("SELECT id, username FROM users")
+  .get(async (req: any, res: any) => {
+    // console.log("RES asdafasd", res);
+    //  console.log("ASDF REQ", req);
+
+    await usersDb
+      .query("SELECT * FROM users")
       .then((data: any) => {
+        //  console.log(data.value);
+
         res.send(data);
       })
-      .catch(function (error: any) {
+      .catch((error: any) => {
         res.send(error);
       });
   });
-router
+
+usersRouter
   .route("/:id")
-  .get((req: any, res: any) => {
-    db.one('SELECT id, surname FROM "users" WHERE id=$1', [req.params.id])
+  .get(async (req: any, res: any) => {
+    await usersDb
+      .one("SELECT id, username FROM users WHERE id=$1", [req.params.id])
       .then((data: any) => {
         res.send(data);
       })
@@ -49,8 +37,9 @@ router
         res.sendStatus(404);
       });
   })
-  .delete((req: any, res: any) => {
-    db.query('DELETE FROM "users" WHERE id=$1', [req.params.id])
+  .delete(async (req: any, res: any) => {
+    await usersDb
+      .query("DELETE FROM users WHERE id=$1", [req.params.id])
       .then((data: any) => {
         res.send(data);
       })
@@ -58,12 +47,13 @@ router
         res.sendStatus(404);
       });
   })
-  .put((req: any, res: any) => {
+  .put(async (req: any, res: any) => {
     console.log(req.body);
-    db.query('UPDATE "users" SET surname=$2 WHERE id=$3', [
-      req.body.surname,
-      req.params.id,
-    ])
+    await usersDb
+      .query("UPDATE users SET username=$1 WHERE id=$2", [
+        req.body.username,
+        req.params.id,
+      ])
       .then((data: any) => {
         res.send(data);
       })
@@ -71,4 +61,4 @@ router
         res.sendStatus(404);
       });
   });
-module.exports = router;
+module.exports = usersRouter;

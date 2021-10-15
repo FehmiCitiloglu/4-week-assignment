@@ -4,14 +4,23 @@ import express from "express";
 const app = express();
 const port = 3001;
 const usersRouter = require("./routers/users");
+const tweetsRouter = require("./routers/tweets");
+const homeRouter = require("./routers/home");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerDocument = require("../swagger.json");
 
-const db = require("./db/db");
+// const db = require("./db/db");
+
+app.listen(port, () => {
+  console.log(`Server started at http://localhost:${port}`);
+});
 app.use(express.json());
 
+app.use("/", homeRouter);
 app.use("/users", usersRouter);
+app.use("/tweets", tweetsRouter);
+
 // var options = {
 //   explorer: true,
 // };
@@ -35,36 +44,33 @@ app.use("/users", usersRouter);
 //   ssl: false,
 // });
 
-app.get("/users/:id", (req: any, res: any) => {
-  const { id } = req.params;
-  db.one("SELECT * FROM users where id=$1", [id])
-    .then(function (data: any) {
-      res.send(data);
-      console.log("DATA:", data);
-    })
-    .catch(function (error: any) {
-      console.log("ERROR:", error);
-      res.send(error.message);
-    });
-});
+// app.get("/users/:id", (req: any, res: any) => {
+//   const { id } = req.params;
+//   db.one("SELECT * FROM users where id=$1", [id])
+//     .then(function (data: any) {
+//       res.send(data);
+//       console.log("DATA:", data);
+//     })
+//     .catch(function (error: any) {
+//       console.log("ERROR:", error);
+//       res.send(error.message);
+//     });
+// });
 
-app.post("/tweets", (req: any, res: any) => {
-  console.log(req.body);
+// app.post("/tweets", (req: any, res: any) => {
+//   console.log(req.body);
 
-  res.send(req.body);
-});
-app.get("/", async (req: any, res: any) => {
-  const data = await db.query(
-    "SELECT user_id, tweet_content, created_at FROM tweets "
-  );
-  console.log(data);
+//   res.send(req.body);
+// });
+// app.get("/", async (req: any, res: any) => {
+//   const data = await db.query(
+//     "SELECT user_id, tweet_content, created_at FROM tweets "
+//   );
+//   console.log(data);
 
-  res.send(data);
-});
+//   res.send(data);
+// });
 
-app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
-});
 const options = {
   explorer: true,
 };
