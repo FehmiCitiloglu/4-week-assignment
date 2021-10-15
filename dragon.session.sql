@@ -5,9 +5,9 @@ CREATE TABLE users (
 );
 
 CREATE TABLE tweets (
+    tweet_id SERIAL PRIMARY KEY,
     user_id int not null,
     tweet_content CHARACTER VARYING(280) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id),
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
 )
