@@ -23,6 +23,16 @@ usersRouter
       .catch((error: any) => {
         res.send(error);
       });
+  })
+  .post((req: any, res: any) => {
+    console.log(req.body);
+    db.one(
+      "INSERT INTO users (username) VALUES($1) RETURNING id",
+      [req.body.username],
+      (event: any) => event.id
+    ).then((data: any) => {
+      res.send(data);
+    });
   });
 
 usersRouter

@@ -15,8 +15,11 @@ const swaggerDocument = require("../swagger.json");
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
+// app.use(require("connect").bodyParser());
 app.use(express.json());
 
+// app.use(express.urlencoded());
+// app.use(express.bodyParser());
 app.use("/", homeRouter);
 app.use("/users", usersRouter);
 app.use("/tweets", tweetsRouter);

@@ -20,6 +20,22 @@ tweetsRouter
       .catch(function (error: any) {
         res.send(error);
       });
+  })
+  .post(async (req: any, res: any) => {
+    const userId = req.body.user_id;
+    const tweetContent = req.body.tweet_content;
+    //  console.log(res);
+
+    console.log("asdasd", req.path);
+    await tweetsDb
+      .query(
+        "INSERT INTO tweets (user_id, tweet_content) VALUES($1, $2)",
+        [userId, tweetContent]
+        // (event: any) => event.id
+      )
+      .then((data: any) => {
+        res.send(data);
+      });
   });
 
 tweetsRouter
@@ -47,6 +63,7 @@ tweetsRouter
         res.sendStatus(404);
       });
   });
+
 // .put(async (req: any, res: any) => {
 //   console.log(req.body);
 //   await tweetsDb
