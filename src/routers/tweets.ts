@@ -23,14 +23,14 @@ tweetsRouter
   })
   .post(async (req: any, res: any) => {
     const userId = req.body.user_id;
-    const tweetContent = req.body.tweet_content;
-    //  console.log(res);
+    const content = req.body.content;
+    // console.log(res);
 
-    console.log("asdasd", req.path);
+    console.log("asdasd", req.body);
     await tweetsDb
       .query(
         "INSERT INTO tweets (user_id, tweet_content) VALUES($1, $2)",
-        [userId, tweetContent]
+        [userId, content]
         // (event: any) => event.id
       )
       .then((data: any) => {
