@@ -1,10 +1,12 @@
 import express from "express";
 // import bodyParser from "body-parser";
+require("dotenv").config();
 const app = express();
 const port = 3001;
 
 app.use(express.json());
 var pgp = require("pg-promise")();
+// pgp.defaults.ssl = true;
 // var db = pgp("postgres://cccfehmi.fc2@gmail.com:123456@localhost:5432/twitter");
 
 var db = pgp({
@@ -13,15 +15,14 @@ var db = pgp({
   host: process.env.DB_HOST,
   port: 5432,
   database: process.env.DB_DATABASE,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: false,
 });
+
 app.get("/", (req: any, res: any) => {
-  db.one("SELECT * FROM users")
+  db.one("SELECT * FROM users where id=1")
     .then(function (data: any) {
       res.send(data);
-      console.log("DATA:", data.value);
+      console.log("DATA:", data);
     })
     .catch(function (error: any) {
       console.log("ERROR:", error);
