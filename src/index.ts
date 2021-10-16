@@ -79,4 +79,4 @@ app.use("/tweets", tweetsRouter);
 const options = {
   explorer: true,
 };
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));

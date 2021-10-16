@@ -1,5 +1,6 @@
 const usersExpress = require("express");
-const usersDb = require("../db/db");
+require("dotenv").config();
+const usersDb = process.env.DATABASE_URL || require("../db/db");
 
 const usersRouter = usersExpress.Router();
 
@@ -26,13 +27,15 @@ usersRouter
   })
   .post((req: any, res: any) => {
     console.log(req.body);
-    db.one(
-      "INSERT INTO users (username) VALUES($1) RETURNING id",
-      [req.body.username],
-      (event: any) => event.id
-    ).then((data: any) => {
-      res.send(data);
-    });
+    usersDb
+      .query(
+        "INSERT INTO users (username) VALUES($1)",
+        [req.body.username]
+        //(event: any) => event.id
+      )
+      .then((data: any) => {
+        res.send(data);
+      });
   });
 
 usersRouter

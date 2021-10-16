@@ -1,5 +1,5 @@
 const tweetsExpress = require("express");
-const tweetsDb = require("../db/db");
+const tweetsDb = process.env.DATABASE_URL || require("../db/db");
 const tweetsRouter = tweetsExpress.Router();
 
 tweetsRouter
