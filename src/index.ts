@@ -2,6 +2,8 @@ import express from "express";
 // import bodyParser from "body-parser";
 // require("dotenv").config();
 const app = express();
+require("dotenv").config();
+
 const port = 3001;
 const usersRouter = require("./routers/users");
 const tweetsRouter = require("./routers/tweets");
@@ -12,7 +14,7 @@ const swaggerDocument = require("../swagger.json");
 
 // const db = require("./db/db");
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
 // app.use(require("connect").bodyParser());
