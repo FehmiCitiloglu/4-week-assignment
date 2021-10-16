@@ -1,6 +1,6 @@
 const usersExpress = require("express");
 require("dotenv").config();
-const usersDb = process.env.DATABASE_URL || require("../db/db");
+const usersDb = require("../db/db");
 
 const usersRouter = usersExpress.Router();
 
