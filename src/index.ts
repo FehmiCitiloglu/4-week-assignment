@@ -3,8 +3,8 @@ import express from "express";
 // require("dotenv").config();
 const app = express();
 require("dotenv").config();
-
-const port = 3001;
+const cool = require("cool-ascii-faces");
+const port = process.env.PORT || 3001;
 const usersRouter = require("./routers/users");
 const tweetsRouter = require("./routers/tweets");
 const homeRouter = require("./routers/home");
@@ -14,7 +14,7 @@ const swaggerDocument = require("../swagger.json");
 
 // const db = require("./db/db");
 
-app.listen(process.env.PORT || port, () => {
+app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
 // app.use(require("connect").bodyParser());
@@ -25,6 +25,7 @@ app.use(express.json());
 app.use("/", homeRouter);
 app.use("/users", usersRouter);
 app.use("/tweets", tweetsRouter);
+app.get("/cool", async (req: any, res: any) => res.send(cool()));
 
 // var options = {
 //   explorer: true,
