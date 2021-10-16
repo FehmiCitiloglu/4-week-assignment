@@ -3,7 +3,7 @@ import express from "express";
 // require("dotenv").config();
 const app = express();
 require("dotenv").config();
-const cool = require("cool-ascii-faces");
+
 const port = process.env.PORT || 3001;
 const usersRouter = require("./routers/users");
 const tweetsRouter = require("./routers/tweets");
@@ -25,7 +25,6 @@ app.use(express.json());
 app.use("/", homeRouter);
 app.use("/users", usersRouter);
 app.use("/tweets", tweetsRouter);
-app.get("/cool", async (req: any, res: any) => res.send(cool()));
 
 // var options = {
 //   explorer: true,
